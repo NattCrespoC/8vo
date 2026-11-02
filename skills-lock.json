@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "skills": {
+    "db-indexing": {
+      "source": "hainrixz/claude-db",
+      "sourceType": "github",
+      "skillPath": "skills/db-indexing/SKILL.md",
+      "computedHash": "b44034023a62fb0b7281b020cc05d208ee638a3247dea6ff9c1a678120edbff3",
+      "installMode": "copy"
+    },
+    "db-security-access": {
+      "source": "hainrixz/claude-db",
+      "sourceType": "github",
+      "skillPath": "skills/db-security-access/SKILL.md",
+      "computedHash": "02cce6307ee445d507b492ee1083dbf2f612c27ff149b983d57641e104bfd093",
+      "installMode": "copy"
+    },
+    "db-specialized-fit": {
+      "source": "hainrixz/claude-db",
+      "sourceType": "github",
+      "skillPath": "skills/db-specialized-fit/SKILL.md",
+      "computedHash": "e713c087018f5a06b0b82f1b101ba93d06e7b951443434de85b97b3754121d37",
+      "installMode": "copy"
+    },
+    "db-types-precision": {
+      "source": "hainrixz/claude-db",
+      "sourceType": "github",
+      "skillPath": "skills/db-types-precision/SKILL.md",
+      "computedHash": "3c5aaf1b2da991f90486e006e5c31ffb69b9cfcabc44d802a3269b476ad8dd96",
+      "installMode": "copy"
+    },
+    "design-threat-review": {
+      "source": "ashrafiucse/security-audit-skills",
+      "sourceType": "github",
+      "skillPath": "skills/design-threat-review/SKILL.md",
+      "computedHash": "c35cfb61f88ff5d6be9d173dedd072967747f44f48dbe773485048c41bf21feb",
+      "installMode": "copy"
+    },
+    "executing-plans": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "skillPath": "skills/executing-plans/SKILL.md",
+      "computedHash": "cc778643e7d4cf455da8fab2d435d6ba26e59c0fc4aef29d892540185a54ff60",
+      "installMode": "copy"
+    },
+    "filament-pro": {
+      "source": "marcelorodrigo/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/filament-pro/SKILL.md",
+      "computedHash": "8e7763e017b3cfbdbf16bd968cfdb62e138a7e89f9494766e1d91c4e339fcd5f",
+      "installMode": "copy"
+    },
+    "flow-security": {
+      "source": "ashrafiucse/security-audit-skills",
+      "sourceType": "github",
+      "skillPath": "skills/flow-security/SKILL.md",
+      "computedHash": "0eb99f8474fb0260d829b24929992305a0638db5d1a5efd3cf4d74025c5ad3bd",
+      "installMode": "copy"
+    },
+    "injection-flaws": {
+      "source": "ashrafiucse/security-audit-skills",
+      "sourceType": "github",
+      "skillPath": "skills/injection-flaws/SKILL.md",
+      "computedHash": "c29e9a98ddc9f89e97e8ec6215ce962910f721424ad84a3f267efa595580db29",
+      "installMode": "copy"
+    },
+    "laravel-security": {
+      "source": "ashrafiucse/security-audit-skills",
+      "sourceType": "github",
+      "skillPath": "skills/laravel-security/SKILL.md",
+      "computedHash": "01413999afa3fed368c4527059b43832733e88ac0bb9bbf16c07fcdd0040fc2c",
+      "installMode": "copy"
+    },
+    "laravel-specialist": {
+      "source": "jeffallan/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/laravel-specialist/SKILL.md",
+      "computedHash": "3403773759d65079d1a31052b4a87c526a164eee343bf360dba00ee46dd4a6e4",
+      "installMode": "copy"
+    },
+    "llm-security": {
+      "source": "ashrafiucse/security-audit-skills",
+      "sourceType": "github",
+      "skillPath": "skills/llm-security/SKILL.md",
+      "computedHash": "75458cce0e0b0bb2cc4e0f7a075b7046601df418d0bd4c0bf765a72212de526c",
+      "installMode": "copy"
+    },
+    "secrets-detection": {
+      "source": "ashrafiucse/security-audit-skills",
+      "sourceType": "github",
+      "skillPath": "skills/secrets-detection/SKILL.md",
+      "computedHash": "857341f0dd2b0b0dc580a265e77a961fd269c2151669bf2268468753677dc590",
+      "installMode": "copy"
+    },
+    "security-audit": {
+      "source": "ashrafiucse/security-audit-skills",
+      "sourceType": "github",
+      "skillPath": "skills/security-audit/SKILL.md",
+      "computedHash": "3edfb559744007f3dbae34affd93ea6c13fd58d4ea42a69c097183ef7b9a4ca3",
+      "installMode": "copy"
+    },
+    "security-reviewer": {
+      "source": "jeffallan/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/security-reviewer/SKILL.md",
+      "computedHash": "03911232e1ab28f56961cf8febc901963bf2a5f2e0fb459eab97cd77226ac833",
+      "installMode": "copy"
+    },
+    "sql-pro": {
+      "source": "jeffallan/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/sql-pro/SKILL.md",
+      "computedHash": "54a4da086ae0da3c0bf5a2b3ab2d1c408ed3cd31df632602c05c17c4cd6475a7",
+      "installMode": "copy"
+    },
+    "systematic-debugging": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "skillPath": "skills/systematic-debugging/SKILL.md",
+      "computedHash": "276fb0aadb002ab930cc2a56de89e16995a2e3e70b33587652bf0a5fb123148d",
+      "installMode": "copy"
+    },
+    "test-driven-development": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "skillPath": "skills/test-driven-development/SKILL.md",
+      "computedHash": "3cfe4ebb6fa7288f668d87880d279c8e48f7a92b63415e296857060f5ce22e05",
+      "installMode": "copy"
+    },
+    "websocket-engineer": {
+      "source": "jeffallan/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/websocket-engineer/SKILL.md",
+      "computedHash": "e980d3c9cca4e535804793ad24e464514de6be45095aa1a148bb0d1f197625a5",
+      "installMode": "copy"
+    }
+  }
+}

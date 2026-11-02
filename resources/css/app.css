@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --brand-navy: #102C57;
+    --brand-emerald: #00A86B;
+}

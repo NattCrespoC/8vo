@@ -1,0 +1,68 @@
+{
+    "name": "andina/sistema-erp-auditoria-ia",
+    "type": "project",
+    "description": "Sistema ERP de Gestión de Compras e Inventarios con Auditoría IA Vectorial en Tiempo Real para Andina S.R.L.",
+    "keywords": ["erp", "laravel", "filament", "pgvector", "ollama", "groq", "reverb"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nataly Nicole Crespo",
+            "role": "Lead Architect / Developer"
+        },
+        {
+            "name": "Lucio Mercado",
+            "role": "Full-Stack Developer / Researcher"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^3.2",
+        "laravel/framework": "^11.0",
+        "laravel/tinker": "^2.9",
+        "spatie/laravel-permission": "^6.0"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "mockery/mockery": "^1.6",
+        "pestphp/pest": "^2.34",
+        "pestphp/pest-plugin-laravel": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "audit": {
+            "block": false
+        },
+        "platform": {
+            "php": "8.3.0"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

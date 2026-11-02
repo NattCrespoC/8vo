@@ -1,0 +1,26 @@
+# Normalización de saltos de línea para compatibilidad Linux & Windows
+* text=auto eol=lf
+
+# Scripts de shell para Linux (deben conservar siempre LF para no fallar con \r)
+*.sh text eol=lf
+
+# Scripts de PowerShell y Batch para Windows
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Código fuente PHP y Laravel
+*.php text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+
+# Archivos binarios que no deben modificarse
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.ico binary
