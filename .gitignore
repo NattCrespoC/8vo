@@ -5,6 +5,7 @@
 /storage/framework/sessions/*
 /storage/framework/views/*
 /storage/framework/cache/*
+/storage/framework/testing/*
 /storage/logs/*
 !/storage/framework/sessions/.gitkeep
 !/storage/framework/views/.gitkeep

@@ -1,8 +1,8 @@
 {
-    "name": "andina/sistema-erp-auditoria-ia",
+    "name": "petidentity/petidentity-platform",
     "type": "project",
-    "description": "Sistema ERP de Gestión de Compras e Inventarios con Auditoría IA Vectorial en Tiempo Real para Andina S.R.L.",
-    "keywords": ["erp", "laravel", "filament", "pgvector", "ollama", "groq", "reverb"],
+    "description": "Sistema web para el registro, geolocalización y reencuentro de mascotas perdidas y encontradas con IA y Leaflet.",
+    "keywords": ["mascotas", "geolocalizacion", "laravel", "leaflet", "ia-matching", "pet-finder"],
     "license": "MIT",
     "authors": [
         {

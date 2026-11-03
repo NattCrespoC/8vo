@@ -2,6 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(Tests\TestCase::class, DatabaseTransactions::class)->in('Feature', 'Unit');
+uses(Tests\TestCase::class, RefreshDatabase::class)->in('Feature', 'Unit');

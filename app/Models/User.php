@@ -37,18 +37,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function purchaseOrders(): HasMany
+    public function petReports(): HasMany
     {
-        return $this->hasMany(PurchaseOrder::class);
-    }
-
-    public function inventoryMovements(): HasMany
-    {
-        return $this->hasMany(InventoryMovement::class);
-    }
-
-    public function auditResolutions(): HasMany
-    {
-        return $this->hasMany(AuditResolution::class, 'auditor_user_id');
+        return $this->hasMany(PetReport::class);
     }
 }

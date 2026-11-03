@@ -1,97 +1,98 @@
-# 01. Formulación del Problema y Caso de Estudio
+# 01. Formulación del Problema y Caso de Estudio - PETIDENTITY
 
 ## Título del Proyecto
-**Sistema web de gestión de adquisiciones e inventarios para la auditoría operativa en tiempo real mediante detección de anomalías con vectores matemáticos e inteligencia artificial.**  
-*Caso de estudio:* Importadora y Distribuidora Comercial "Andina S.R.L."
+**Sistema web colaborativo para el registro, geolocalización y reencuentro de mascotas perdidas y encontradas mediante algoritmos de coincidencia inteligente y visión artificial.**  
+*Caso de estudio:* Red Ciudadana y Albergues de Rescate Animal de Cochabamba / Bolivia.
 
 ---
 
 ## 1. Introducción
-La gestión de compras y el control de inventarios constituyen la columna vertebral financiera de las empresas comercializadoras y distribuidoras en el mercado boliviano. La rentabilidad y viabilidad de estas organizaciones depende directamente de la eficiencia en el flujo de mercaderías, la exactitud de los costos ponderados y la transparencia en las negociaciones con proveedores. No obstante, el incremento acelerado en el volumen de operaciones comerciales ha desbordado los controles tradicionales basados en conciliaciones manuales de fin de mes. Errores de tipeo involuntarios, sobreprecios no autorizados, desvíos de inventario y fraccionamiento intencional de órdenes de compra suelen descubrirse entre 15 y 30 días después de haberse pagado los fondos, cuando la recuperación del capital ya resulta inviable.
+La pérdida o extravío de animales de compañía representa un fenómeno de alto impacto social, afectivo y de salud pública en las principales ciudades de Bolivia. La proliferación de mascotas en entornos urbanos no ha estado acompañada de herramientas tecnológicas centralizadas que permitan una respuesta rápida y coordinada ante situaciones de extravío o abandono temporal. En la actualidad, la búsqueda de una mascota perdida descansa casi exclusivamente en la difusión desarticulada de publicaciones en grupos de redes sociales (Facebook, WhatsApp), la impresión de carteles en postes y la peregrinación física por centros de zoonosis y albergues de rescate.
 
-El presente proyecto plantea el desarrollo e implementación de una plataforma web empresarial basada en el framework **Laravel 11**, integrada con una arquitectura orientada a eventos, bases de datos vectoriales en **PostgreSQL (pgvector)** e inteligencia artificial de alto rendimiento. Cada movimiento transaccional es auditado preventivamente en milisegundos mediante representaciones vectoriales multidimensionales y cálculos de desviación típica estandarizada ($Z$-Score). Este proyecto articula de forma sinérgica la rigurosidad metodológica de la **Ingeniería de Software 2**, el impacto operativo directo exigido en **Práctica Empresarial**, y la demostración de rentabilidad financiera requerida en **Preparación y Evaluación de Proyectos (PEP)**.
+Esta dispersión informativa genera una grave asimetría: mientras un ciudadano angustiado busca a su perro en una zona de la ciudad, otro vecino o rescatista puede haber encontrado al mismo animal a pocas cuadras de distancia sin tener conocimiento mutuo. La falta de un índice geográfico y de un motor analítico que cruce rasgos físicos específicos (especie, color, tamaño, señas particulares) y proximidad espacial provoca que la mayoría de los casos queden sin resolver, terminando en la sobrepoblación y colapso de los albergues de rescate o en el incremento de fauna urbana en situación de calle.
+
+El presente proyecto plantea el desarrollo de **PETIDENTITY**, una plataforma web moderna desarrollada bajo el framework **Laravel 11**, contenedorizada en **Podman** e integrada con geolocalización libre mediante **Leaflet.js + OpenStreetMap** y un motor de coincidencia inteligente multicriterio (`PetMatcherService`). La plataforma articula los estándares de rigor metodológico de **Ingeniería de Software 2**, el impacto social directo requerido en **Práctica Empresarial**, y la evaluación de viabilidad económica y social exigida en **Preparación y Evaluación de Proyectos (PEP)**.
 
 ---
 
 ## 2. Antecedentes
-En el contexto empresarial nacional, las pequeñas y medianas empresas comerciales han adoptado paulatinamente hojas de cálculo y sistemas contables tradicionales con enfoque transaccional pasivo (CRUD). Si bien estas herramientas permiten registrar entradas y salidas de inventario, carecen por completo de mecanismos analíticos autónomos capaces de fiscalizar la coherencia estadística y semántica de los datos en el momento exacto de su captura. La labor de fiscalización recae exclusivamente en auditorías humanas bimestrales o semestrales, permitiendo que anomalías recurrentes desgasten el flujo de caja.
+En el ámbito urbano boliviano, las iniciativas orientadas a la protección animal han dependido tradicionalmente del voluntariado y de organizaciones no gubernamentales que operan con recursos limitados. Plataformas comerciales extranjeras de registro de mascotas suelen requerir suscripciones en moneda extranjera o implantes de microchip RFID con lectores propietarios que no están estandarizados en el medio local.
 
-En el caso específico de la **Importadora y Distribuidora Comercial "Andina S.R.L."**, el crecimiento transaccional sostenido de las últimas dos gestiones ha evidenciado las limitaciones estructurales de su control interno: se han registrado desfases persistentes entre el kardex físico y el valorado, compras recurrentes de emergencia a proveedores con precios alterados y una alta sobrecarga operativa en el personal administrativo.
-
----
-
-## 3. Formulación del Problema (Tres Problemas Medibles y Narrados)
-
-### 1. Problema Medible en Tiempo (Demora en la Detección y Auditoría)
-En el flujo operativo vigente de la empresa, el cotejo y conciliación entre órdenes de compra, notas de remisión de almacén y facturas físicas de proveedores se ejecuta de forma manual una vez concluido el ciclo mensual. Este procedimiento manual demanda un promedio de **48 horas-hombre mensuales** por parte del personal de contabilidad y administración, y provoca que cualquier irregularidad —como el ingreso de ítems con sobreprecios no autorizados o retiros de stock sin respaldo— tarde entre **15 y 30 días calendario** en ser descubierta, momento en el que los cheques y transferencias ya fueron consolidados.
-
-### 2. Problema Medible en Cantidad (Volumen de Registros con Inconsistencias)
-Durante el último semestre de operación comercial, de un promedio mensual de **1.200 transacciones operativas** (entre compras locales, reposiciones y bajas de almacén), aproximadamente el **14% de los registros (168 transacciones por mes)** presentó inconsistencias operativas no advertidas en el momento de la carga. Entre estas irregularidades destacan facturas duplicadas con ligeras variantes en su numeración, fraccionamiento artificial de pedidos para no superar el límite de autorización gerencial, y salidas de almacén fuera del horario laboral.
-
-### 3. Problema Medible en Costo (Impacto Económico y Pérdida Financiera)
-La carencia de un filtro computacional en tiempo real que valide la coherencia de costos frente al histórico genera pérdidas financieras directas estimadas en **Bs. 8.500 mensuales** (equivalentes a **Bs. 102.000 anuales**). Estas pérdidas provienen de sobreprecios pagados frente al costo promedio ponderado, adquisiciones innecesarias de productos con sobrestock y mermas no justificadas. Esta fuga constante de capital reduce el margen neto de utilidad operativa en un **6,5%**, debilitando la liquidez del negocio.
+En el caso específico del departamento de Cochabamba y el eje metropolitano, se estima que más de 50 grupos comunitarios en redes sociales publican diariamente decenas de avisos de animales extraviados o encontrados. No obstante, al carecer de una estructura de base de datos normalizada, los avisos quedan enterrados por el algoritmo de las redes en cuestión de horas. La carencia de un sistema unificado y con georreferenciación precisa perpetúa el ciclo de extravío y abandono.
 
 ---
 
-## 4. Pregunta de Investigación Central
-> *¿De qué manera el desarrollo de un sistema web con detección de anomalías basada en vectores matemáticos e inteligencia artificial permitirá reducir los tiempos de auditoría operativa, disminuir la cantidad de transacciones irregulares y mitigar las pérdidas financieras en el área de adquisiciones e inventarios de la empresa "Andina S.R.L."?*
+## 3. Formulación del Problema (Tres Problemas Medibles)
+
+### 1. Problema Medible en Tiempo (Demora en el Reencuentro y Localización)
+En el ecosistema informal de búsqueda en redes sociales, el tiempo promedio que transcurre desde que una mascota se extravía hasta que se logra establecer contacto con quien la encontró oscila entre **18 y 35 días calendario**. Durante este lapso, el animal corre el riesgo de sufrir accidentes de tránsito, contraer enfermedades o ser trasladado a distritos lejanos, disminuyendo exponencialmente la probabilidad de reencuentro tras las primeras 72 horas críticas.
+
+### 2. Problema Medible en Cantidad (Volumen de Mascotas sin Recuperar)
+De acuerdo con registros muestrales de colectivos de rescate animal en el área metropolitana, de un promedio estimado de **280 reportes mensuales** de mascotas extraviadas, aproximadamente el **68% (190 mascotas al mes)** nunca regresa a su hogar. Un alto porcentaje de estos animales termina ingresando a albergues temporales que ya operan a más del **140% de su capacidad instalada**, provocando hacinamiento y saturación logística.
+
+### 3. Problema Medible en Costo (Impacto Económico en Familias y Refugios)
+La dispersión en la búsqueda impone un costo económico significativo:
+- Las familias afectadas destinan en promedio entre **Bs. 250 y Bs. 600** en impresión de afiches, fotocopias y movilización en los primeros 10 días.
+- Para los albergues y centros de acogida, la manutención, atención veterinaria básica y alimentación de cada animal no reclamado representa un costo recurrente de aproximadamente **Bs. 450 mensuales por mascota**. La imposibilidad de conectar oportunamente a las mascotas encontradas con sus dueños legítimos genera una sobrecarga presupuestaria evitable superior a **Bs. 85.000 anuales** por cada 20 animales retenidos innecesariamente.
 
 ---
 
-## 5. Diagrama de Ishikawa (Causa - Efecto)
+## 4. Pregunta Central de Investigación
+> *¿De qué manera el desarrollo de un sistema web colaborativo con geolocalización interactiva y motor de coincidencia inteligente multicriterio permitirá reducir el tiempo de localización, incrementar la tasa de reencuentro de mascotas extraviadas y mitigar los costos de búsqueda y manutención en albergues de la ciudad de Cochabamba?*
 
-```text
-[METODOLOGÍA]                 [TECNOLOGÍA]                     [PERSONAL]
-Auditorías manuales          Sistema actual sin validación    Sobrecarga operativa
-post-mortem (cada 30 días)   estadística ni vectorial         y errores de digitación
-         \                           \                              /
-          \                           \                            /
-           v                           v                          v
-===========================================================================> [PROBLEMA CENTRAL]
-           ^                           ^                          ^          Alta incidencia de pérdidas
-          /                           /                            \         financieras y demora en la
-         /                           /                              \        detección de anomalías en
-Sin alertas en vivo ni      Costos no indexados a la         Falta de trazabilidad   compras e inventarios
-umbrales de desvío Z-Score  historia del proveedor           en tiempo real (RBAC)   de "Andina S.R.L."
-[CONTROL INTERNO]           [DATOS / INSUMOS]                [PROCESOS]
+---
+
+## 5. Diagrama de Causa - Efecto (Ishikawa)
+
+```mermaid
+flowchart LR
+    subgraph METODOLOGIA [Metodología de Búsqueda]
+        M1[Búsqueda manual y no indexada en redes]
+        M2[Falta de trazabilidad tras 72 horas críticas]
+    end
+
+    subgraph TECNOLOGIA [Infraestructura Tecnológica]
+        T1[Ausencia de geolocalización interactiva]
+        T2[Carencia de algoritmos de coincidencia inteligente]
+    end
+
+    subgraph CIUDADANOS [Población y Comunidad]
+        C1[Desesperación y falta de canal centralizado]
+        C2[Dificultad para contactar directamente por WhatsApp]
+    end
+
+    subgraph ALBERGUES [Albergues y Refugios]
+        A1[Saturación por animales no reclamados]
+        A2[Altos costos de manutención por estadía prolongada]
+    end
+
+    METODOLOGIA --> PROBLEMA
+    TECNOLOGIA --> PROBLEMA
+    CIUDADANOS --> PROBLEMA
+    ALBERGUES --> PROBLEMA
+
+    PROBLEMA["PROBLEMA CENTRAL:\nBaja tasa de reencuentro de mascotas extraviadas,\nalta demora temporal y sobrecosto financiero\nen familias y refugios de rescate animal"]
 ```
 
 ---
 
-## 6. Relación de Causa y Efecto (Árbol de Problemas)
+## 6. Objetivos del Proyecto
 
-| Código | Causa Raíz (Raíces del Árbol) | Problema Central (Tronco) | Efecto Directo y Medible (Ramas/Hojas) |
-| :---: | :--- | :--- | :--- |
-| **C1** | Registro de compras y kardex sin validación matemática ni contextual frente al historial. | Deficiente control y detección tardía de anomalías operativas en adquisiciones e inventarios. | **E1:** Pérdida financiera directa de **Bs. 8.500 mensuales** por sobreprecios y compras duplicadas. |
-| **C2** | Revisión documental manual diferida al cierre mensual sin alertas en tiempo real. | Deficiente control y detección tardía de anomalías operativas en adquisiciones e inventarios. | **E2:** Inversión improductiva de **48 horas-hombre/mes** y desfase de **15 a 30 días** en detectar desvíos. |
-| **C3** | Falta de trazabilidad automatizada sobre roles, horarios y patrones de comportamiento. | Deficiente control y detección tardía de anomalías operativas en adquisiciones e inventarios. | **E3:** Existencia de un **14% de transacciones mensuales (168 registros)** con inconsistencias operativas. |
+### Objetivo General
+Desarrollar e implementar un sistema web colaborativo y reactivo (**PETIDENTITY**) basado en Laravel 11 y Podman, dotado de geolocalización con mapas libres y un motor de coincidencia multicriterio basado en proximidad geográfica y rasgos fenotípicos, para facilitar el registro, identificación y reencuentro oportuno de mascotas perdidas y encontradas.
+
+### Objetivos Específicos
+1. Diseñar y construir una arquitectura modular y desacoplada mediante contenedores **Podman** con Laravel 11, base de datos relacional y almacenamiento seguro de imágenes.
+2. Implementar un módulo de geolocalización interactiva mediante **Leaflet.js y OpenStreetMap**, permitiendo a los ciudadanos fijar con un clic las coordenadas exactas del extravío o hallazgo sin depender de APIs de pago.
+3. Desarrollar un motor de análisis de coincidencias (**`PetMatcherService`**) que aplique la fórmula esférica de Haversine y ponderaciones de similitud de rasgos físicos (especie, raza, colores, tamaño) para sugerir emparejamientos automáticos entre reportes opuestos (`lost` vs `found`).
+4. Proveer un canal de contacto directo y seguro vía **WhatsApp y telefonía** dentro de la ficha de detalle de cada mascota para agilizar la coordinación ciudadana.
+5. Evaluar la viabilidad económica, técnica y operativa del sistema bajo los criterios académicos de Preparación y Evaluación de Proyectos (PEP) e Ingeniería de Software 2.
 
 ---
 
-## 7. Objetivos del Proyecto
+## 7. Justificación del Proyecto
 
-### Objetivo General
-**Desarrollar** un sistema web de gestión de adquisiciones e inventarios para la auditoría operativa en tiempo real mediante detección de anomalías con vectores matemáticos e inteligencia artificial en la Importadora y Distribuidora Comercial "Andina S.R.L.".
-
-### Objetivos Específicos y Acciones
-*(Regla de Ingeniería de Software: Ningún objetivo específico repite el verbo "Desarrollar" y todos los verbos son únicos).*
-
-1. **Diagnosticar** los procesos actuales de compras, control de almacenes y criterios de auditoría interna de la empresa para establecer los parámetros cuantitativos y semánticos de normalidad transaccional.
-   - *Acción 1.1:* Realizar el relevamiento de información mediante entrevistas estructuradas y análisis de órdenes de compra y kardex históricos.
-   - *Acción 1.2:* Identificar las variables críticas de riesgo (precios unitarios, volúmenes, horarios y márgenes de tolerancia) para calibrar las reglas de negocio.
-   - *Acción 1.3:* Construir un dataset base anonimizado de transacciones históricas para calibrar los umbrales de similitud de coseno y desviación estándar.
-
-2. **Diseñar** la arquitectura de software, el esquema relacional-vectorial de base de datos y los flujos de comunicación asíncrona siguiendo estándares formales de ingeniería.
-   - *Acción 2.1:* Elaborar diagramas C4, casos de uso, diagramas de secuencia y el modelo entidad-relación extendido con soporte para vectores de 768 dimensiones en PostgreSQL (pgvector).
-   - *Acción 2.2:* Definir la estructura de navegación de FilamentPHP, matriz RBAC (Spatie) y componentes de interfaz para visualización de alertas.
-   - *Acción 2.3:* Especificar los contratos de datos (JSON Schema) para la interacción entre Laravel Queues, Ollama y Groq API.
-
-3. **Implementar** los módulos transaccionales del sistema, el motor matemático de detección de anomalías y el canal de notificaciones reactivas utilizando Laravel 11.
-   - *Acción 3.1:* Programar los módulos CRUD de proveedores, catálogo de productos, órdenes de compra maestro-detalle y movimientos de almacén en FilamentPHP v3.
-   - *Acción 3.2:* Codificar el pipeline de vectorización asíncrona con Ollama (`nomic-embed-text`), el cálculo SQL de distancia de coseno y $Z$-Score en PostgreSQL, y la generación de dictámenes con Groq API.
-   - *Acción 3.3:* Integrar Laravel Reverb y Redis para transmitir alertas instantáneas en vivo a los tableros gerenciales y aplicar retenciones preventivas automáticas.
-
-4. **Evaluar** el desempeño técnico del software mediante pruebas automatizadas y determinar la viabilidad económico-financiera del proyecto bajo escenarios de inversión y ahorro operativo.
-   - *Acción 4.1:* Ejecutar pruebas unitarias y de integración con PestPHP para asegurar que la latencia total del pipeline de auditoría se mantenga por debajo de los 2.000 ms.
-   - *Acción 4.2:* Medir la precisión y exhaustividad (Precision / Recall) del algoritmo inyectando transacciones de prueba con fraudes y sobreprecios simulados.
-   - *Acción 4.3:* Construir el flujo de caja proyectado a 5 años y calcular VAN, TIR, Beneficio/Costo y Periodo de Recuperación en función del ahorro proyectado de Bs. 102.000 anuales.
+- **Justificación Técnica:** El proyecto demuestra la aplicación de arquitectura moderna de software: contenedores independientes con Podman, tipado estricto PHP 8.4, patrones de diseño Service/Action, consumo de mapas libres sin costes recurrentes y algoritmos matemáticos determinísticos de cálculo de distancia esférica.
+- **Justificación Práctica y Operativa:** Permite a cualquier ciudadano reportar una mascota encontrada en cuestión de segundos desde su teléfono móvil sin requerir la instalación de aplicaciones nativas pesadas, georreferenciando el hallazgo de forma visual.
+- **Justificación Económica (PEP):** Reduce drásticamente los gastos familiares en afiches físicos y alivia el costo operativo de manutención en albergues al acelerar la restitución del animal a su núcleo familiar.
+- **Justificación Social:** Fortalece la cultura de protección animal, reduce los peligros asociados a la fauna urbana desprotegida y promueve la solidaridad vecinal organizada.

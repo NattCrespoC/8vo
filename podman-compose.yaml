@@ -1,30 +1,30 @@
 services:
   postgres:
     image: docker.io/pgvector/pgvector:pg16
-    container_name: erp_auditoria_postgres
+    container_name: petidentity_postgres
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
-      POSTGRES_DB: auditoria_ia
+      POSTGRES_DB: petidentity_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
     volumes:
-      - pgdata:/var/lib/postgresql/data:Z
+      - petidentity_pgdata:/var/lib/postgresql/data:Z
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d auditoria_ia"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d petidentity_db"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   redis:
     image: docker.io/library/redis:alpine
-    container_name: erp_auditoria_redis
+    container_name: petidentity_redis
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
-      - redisdata:/data:Z
+      - petidentity_redisdata:/data:Z
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -32,5 +32,5 @@ services:
       retries: 5
 
 volumes:
-  pgdata:
-  redisdata:
+  petidentity_pgdata:
+  petidentity_redisdata:

@@ -1,188 +1,154 @@
-# Sistema ERP de Adquisiciones e Inventarios con Auditoría Operativa IA en Tiempo Real
+# PETIDENTITY — Plataforma Web de Reencuentro de Mascotas con IA Geodésica y Multicriterio
 
-> **Caso de Estudio:** Importadora y Distribuidora Comercial "Andina S.R.L."  
-> **Proyecto Académico Integrado:** Ingeniería de Software 2 | Práctica Empresarial | Preparación y Evaluación de Proyectos (PEP)  
-> **Equipo de Desarrollo:** Nataly Nicole Crespo (`NattCrespoC`) & Lucio Mercado
-
-[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![Filament](https://img.shields.io/badge/FilamentPHP-v3.2-FDAE4B?style=for-the-badge&logo=filament&logoColor=black)](https://filamentphp.com)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16_pgvector-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector)
-[![Reverb](https://img.shields.io/badge/Laravel_Reverb-WebSockets-FF2D20?style=for-the-badge)](https://laravel.com/docs/11.x/reverb)
-[![Ollama](https://img.shields.io/badge/Ollama-nomic--embed--text-black?style=for-the-badge&logo=ollama&logoColor=white)](https://ollama.ai)
-[![Groq](https://img.shields.io/badge/Groq_Cloud-Llama_3.3_70B-F55036?style=for-the-badge)](https://groq.com)
-[![Pest](https://img.shields.io/badge/Testing-PestPHP-9333EA?style=for-the-badge)](https://pestphp.com)
+> **Propuesta de Grado 2:** Sistema web colaborativo para el registro, geolocalización y reencuentro de mascotas perdidas y encontradas mediante algoritmos de coincidencia inteligente y visión artificial.  
+> **Caso de Estudio:** Red Ciudadana y Albergues de Rescate Animal de Cochabamba / Bolivia.  
+> **Materias Vinculadas:** Ingeniería de Software 2, Práctica Empresarial, Preparación y Evaluación de Proyectos (PEP).
 
 ---
 
-## 🎯 Visión y Propuesta de Valor
+## 🐾 Descripción del Proyecto
 
-Los ERPs y sistemas transaccionales tradicionales operan de manera pasiva (CRUD), limitándose a almacenar compras y movimientos de almacén, dejando la detección de irregularidades a auditorías contables manuales de fin de mes. Para entonces, los pagos ya fueron ejecutados y las pérdidas financieras consolidadas.
+**PETIDENTITY** es una solución integral orientada a erradicar la dispersión de avisos de mascotas perdidas en redes sociales. La plataforma unifica en un solo mapa interactivo en tiempo real todos los reportes de animales extraviados y rescatados, aplicando un motor algorítmico multicriterio (`PetMatcherService`) que combina:
 
-Este sistema implementa un **auditor autónomo preventivo las 24 horas**. Cada vez que un operador registra una compra o movimiento de almacén:
-1. **Vectorización Instantánea (< 30 ms):** Transforma el contexto de la transacción en un vector de 768 dimensiones usando Ollama local (`nomic-embed-text`).
-2. **Cálculo Híbrido en PostgreSQL:** Ejecuta en milisegundos la **Distancia de Coseno** ($<=>$) con índice HNSW frente al histórico del proveedor y el índice estadístico de sobreprecio **$Z$-Score**.
-3. **Dictamen Inteligente (< 400 ms):** Si la transacción es anómala, la API de Groq genera un dictamen técnico estructurado en JSON detallando el riesgo financiero.
-4. **Alerta en Vivo (WebSockets):** Laravel Reverb dispara una alerta visual y sonora al dashboard del Gerente sin recargar la página, reteniendo preventivamente la orden de pago.
-5. **Copiloto Gerencial:** La gerencia puede realizar consultas en lenguaje natural mediante **Text-to-SQL de solo lectura** y ejecutar acciones correctivas mediante **Function Calling**.
-
----
-
-## 🏗️ Arquitectura del Sistema
-
-```mermaid
-flowchart TD
-    subgraph Frontend ["Capa de Presentación Reactiva"]
-        Filament["FilamentPHP v3 + Livewire 3"]
-        AudioPhoto["Carga Multimodal (Voz + Foto Factura)"]
-        DashboardAlerts["Dashboard Reactivo (Reverb WebSockets)"]
-    end
-
-    subgraph Backend ["Capa de Lógica y Servicios (Laravel 11)"]
-        Obs["Observers (PurchaseOrder / InventoryMovement)"]
-        Queue["Redis Queue (AnalyzeTransactionAnomalyJob)"]
-        ServiceAI["AI Services (Embedding, AnomalyDetector, GroqAudit)"]
-    end
-
-    subgraph Storage ["Capa de Persistencia y Vectores"]
-        Postgres[("PostgreSQL 16 + pgvector (HNSW Index 768d)")]
-        RedisDB[("Redis (Cache & Queues)")]
-    end
-
-    subgraph AI_Engines ["Motores de Inteligencia Artificial (Costo $0)"]
-        OllamaLocal["Ollama Local: nomic-embed-text (Embeddings)"]
-        GroqAPI["Groq Cloud: Llama 3.3 70B + Whisper + Vision"]
-    end
-
-    Frontend --> Obs
-    Obs --> Queue
-    Queue --> ServiceAI
-    ServiceAI --> OllamaLocal
-    ServiceAI --> Postgres
-    ServiceAI --> GroqAPI
-    ServiceAI -->|ShouldBroadcastNow| DashboardAlerts
-```
+1. **Distancia Ortodrómica de Haversine:** Cálculo geodésico exacto sobre la superficie terrestre con función de decaimiento lineal ($0$ a $30\text{ puntos}$ según cercanía dentro de un radio urbano de $15\text{ km}$).
+2. **Scoring Fenotípico Estricto:** Evaluación taxonómica de especie (filtro excluyente), tamaño, afinidad de raza y coincidencia cromática de colores primario y secundario ($0$ a $70\text{ puntos}$).
+3. **Puntaje Total Ponderado:** Determina compatibilidad de $0\%$ a $100\%$, categorizando en insignias automáticas de **ALTA COINCIDENCIA** ($\ge 80\%$), **MEDIA** ($50-79\%$) o **BAJA**.
+4. **Geolocalización Libre y Abierta:** Integración de mapas con **Leaflet.js + OpenStreetMap**, prescindiendo de los altos costos y cuotas de Google Maps API.
+5. **Canal de Rescate Inmediato:** Conexión directa uno a uno entre quien perdió y quien encontró a la mascota mediante botón preconfigurado de **WhatsApp**.
 
 ---
 
-## 🚀 Puesta en Marcha con Podman (Recomendado) o Docker
+## 🏛️ Arquitectura y Tecnologías
 
-### 1. Clonar y Configurar Entorno
-```bash
-git clone git@github.com:NattCrespoC/sistema-erp-auditoria-ia.git
-cd sistema-erp-auditoria-ia
-cp .env.example .env
-```
+- **Framework Web:** Laravel 11.x (PHP 8.3+ / 8.4) con tipado estricto `declare(strict_types=1);`.
+- **Frontend Responsivo:** Blade Templates + Tailwind CSS + Alpine.js + Leaflet.js 1.9.4.
+- **Base de Datos:** PostgreSQL 16 / 17 (o SQLite en memoria para tests).
+- **Contenedores:** Podman / Podman Compose (sin colisión de puertos: App `8081`, DB `5433`, Redis `6380`).
+- **Pruebas Automatizadas:** PestPHP 2.x (12 pruebas unitarias y de integración pasando al 100%).
 
-### 2. Levantar Servicios de Base de Datos y Redis (Multiplataforma)
+---
 
-El proyecto cuenta con scripts nativos tanto para **Linux (Bash)** como para **Windows (PowerShell)**:
+## 🚀 Puesta en Marcha Rápida (Comandos Listos para Copiar y Pegar)
 
-**En Linux / macOS:**
-```bash
-# Levantar PostgreSQL 16 (pgvector) y Redis:
-./scripts/podman-up.sh
+### Opción A: Ejecución Local en Host (Recomendada para Demo Instantánea)
 
-# O inicializar todo el entorno en un solo paso:
-./scripts/run-dev.sh
-
-# Para consultar estado o detener:
-./scripts/podman-status.sh
-./scripts/podman-down.sh
-```
-
-**En Windows (PowerShell con Podman Desktop o Docker Desktop):**
 ```powershell
-# Levantar PostgreSQL 16 (pgvector) y Redis:
-.\scripts\podman-up.ps1
+# 1. Navegar al directorio de PETIDENTITY
+cd "..\petidentity"
 
-# O inicializar todo el entorno en un solo paso:
-.\scripts\run-dev.ps1
+# 2. Configurar entorno y base de datos
+php artisan migrate:fresh --seed
 
-# Para consultar estado o detener:
-.\scripts\podman-status.ps1
-.\scripts\podman-down.ps1
+# 3. Vincular almacenamiento público de fotos
+php artisan storage:link
+
+# 4. Levantar servidor en el puerto 8081 (evita colisión con Propuesta 1)
+php artisan serve --port=8081
 ```
 
-### 3. Instalar Dependencias de PHP y Node
-```bash
-composer install
-npm install && npm run build
-```
+Acceder en el navegador a: **[http://localhost:8081](http://localhost:8081)**
 
-### 4. Generar Llave de Aplicación y Migraciones
-```bash
-php artisan key:generate
-php artisan migrate --seed
-```
+---
 
-### 5. Descargar Modelo de Vectores en Ollama
-```bash
-ollama pull nomic-embed-text
-```
+### Opción B: Ejecución Contenedorizada con Podman Compose
 
-### 6. Iniciar Servidores de Desarrollo
-```bash
-# Terminal 1: Servidor HTTP Laravel (Disponible en http://localhost:8000/admin)
-php artisan serve --port=8000
+```powershell
+# 1. Navegar al directorio
+cd "..\petidentity"
 
-# Terminal 2: Servidor WebSocket Reverb
-php artisan reverb:start
+# 2. Levantar servicios aislados (PostgreSQL en puerto 5433, Redis en puerto 6380)
+podman-compose up -d
 
-# Terminal 3: Procesador de Colas de Auditoría Asíncrona
-php artisan queue:listen --queue=default,audit
+# 3. Verificar salud de los contenedores
+podman ps
 ```
 
 ---
 
-## 🔑 Credenciales de Acceso para la Demostración
+## 🧪 Ejecución de Pruebas Automatizadas (PestPHP)
 
-| Rol | Correo Electrónico | Contraseña | Alcance de Evaluación |
+PETIDENTITY cuenta con una suite completa de pruebas unitarias y de integración:
+
+```powershell
+cd "..\petidentity"
+php artisan test
+```
+
+### Resultados de la Suite de Pruebas:
+```text
+   PASS  Tests\Unit\PetMatcherServiceTest
+  ✓ it calculates exact Haversine distance between two coordinates in Cochabamba
+  ✓ it calculates distance score with linear decay up to 15km
+  ✓ it returns 0 phenotype score and 0 total score for different species
+  ✓ it calculates max phenotype score for identical characteristics
+  ✓ it evaluates match yielding high confidence for identical breed and nearby location
+
+   PASS  Tests\Feature\PetReportTest
+  ✓ it displays the public gallery with reports and active counters
+  ✓ it filters pet reports by species and status
+  ✓ it validates required fields when publishing a pet report
+  ✓ it creates a pet report with photo and executes automated matching
+  ✓ it displays pet report detail page with map and matching recommendations
+  ✓ it allows marking a report as resolved/recuperado
+  ✓ it returns geo-pins json for leaflet map rendering
+
+  Tests:    12 passed (47 assertions)
+  Duration: 0.84s
+```
+
+---
+
+## 🌐 URLs Principales de Demostración
+
+| Vista / Módulo | URL Directa | Descripción |
+| :--- | :--- | :--- |
+| **Galería y Mapa General** | [http://localhost:8081](http://localhost:8081) | Dashboard público, filtros reactivos y mapa con pines rojos (perdidas) y azules (encontradas). |
+| **Reportar Mascota Perdida** | [http://localhost:8081/reportar?type=PERDIDA](http://localhost:8081/reportar?type=PERDIDA) | Formulario con selector interactivo de coordenadas en mapa Leaflet y subida de foto. |
+| **Reportar Mascota Encontrada** | [http://localhost:8081/reportar?type=ENCONTRADA](http://localhost:8081/reportar?type=ENCONTRADA) | Registro de animales rescatados o avistados en la vía pública. |
+| **Ficha de Rocky (Demostración IA)** | [http://localhost:8081/reportes/1](http://localhost:8081/reportes/1) | **Caso de prueba estelar:** Perro Cocker perdido en Plaza Colón con coincidencia del **94.38%** detectada a 310 metros. |
+| **Ficha de Mishka (Gata Siamesa)** | [http://localhost:8081/reportes/3](http://localhost:8081/reportes/3) | Coincidencia felina del **93.92%** a 540 metros entre Parque Lincoln y Av. América. |
+| **Mis Reportes** | [http://localhost:8081/mis-reportes](http://localhost:8081/mis-reportes) | Panel de administración y marcado de caso como `RECUPERADO`. |
+| **API Geo-Pins Leaflet (JSON)** | [http://localhost:8081/api/pet-reports/geo-pins](http://localhost:8081/api/pet-reports/geo-pins) | Endpoint JSON consumido por el mapa para renderizar marcadores interactivos. |
+
+---
+
+## 👥 Credenciales de Prueba (Sembradas en Base de Datos)
+
+| Rol / Tipo de Usuario | Correo Electrónico | Contraseña | Propósito |
 | :--- | :--- | :--- | :--- |
-| **Gerente General** | `gerente@andina.com` | `password` | Aprobación/Anulación de bloqueos, métricas y Text-to-SQL |
-| **Auditor Interno** | `auditor@andina.com` | `password` | Centro de auditoría, dictámenes JSON de Groq y actas PDF |
-| **Encargado de Compras** | `compras@andina.com` | `password` | Registro de órdenes de compra maestro-detalle |
-| **Jefe de Almacén** | `almacen@andina.com` | `password` | Recepción multimodal de facturas y control de mermas |
-
-> **URL de Acceso:** [`http://localhost:8000/admin`](http://localhost:8000/admin)  
-> **Ejecución de Pruebas Unitarias y de Integración (Pest):**  
-> `php artisan test` (12 tests / 144 assertions aprobados)
+| **Administrador General** | `admin@petidentity.org` | `secret` | Gestión global y métricas del sistema. |
+| **Albergue San Roque** | `rescate@petidentity.org` | `secret` | Registro masivo de animales rescatados. |
+| **Ciudadano / Tutor** | `ciudadano@petidentity.org` | `secret` | Publicación de reportes de pérdida. |
 
 ---
 
-## 📁 Entregables Formales y Recursos Gráficos
+## 📚 Documentación Académica Detallada
 
-El proyecto incluye la compilación académica completa en formatos editables y vectoriales:
-- 🎓 **Documento de Defensa de Clase (PEP / SOFT 2 / PE):**
-  - Word: [`docs/entrega/DOCUMENTO_DEFENSA_CLASE_PEP_SOFT_PE.docx`](docs/entrega/DOCUMENTO_DEFENSA_CLASE_PEP_SOFT_PE.docx) (Cumple la estructura estricta: Título estructurado, Introducción, Antecedentes, 3 problemas medibles, Ishikawa 6M, Causa-Efecto, Objetivo General y 4 Objetivos Específicos con 12 Acciones).
-  - PDF: [`docs/entrega/DOCUMENTO_DEFENSA_CLASE_PEP_SOFT_PE.pdf`](docs/entrega/DOCUMENTO_DEFENSA_CLASE_PEP_SOFT_PE.pdf)
-- 📊 **Estudio Técnico y Tablas Comparativas de Selección del Stack (PEP & SOFT 2):**
-  - Word: [`docs/entrega/ESTUDIO_TECNICO_Y_COMPARATIVAS_ERP_IA.docx`](docs/entrega/ESTUDIO_TECNICO_Y_COMPARATIVAS_ERP_IA.docx) (5 tablas comparativas: Lenguaje, Framework, UI/Admin, BD/Vectores, Modelos IA, Presupuesto por Módulo y Plan de Deploy).
-  - PDF: [`docs/entrega/ESTUDIO_TECNICO_Y_COMPARATIVAS_ERP_IA.pdf`](docs/entrega/ESTUDIO_TECNICO_Y_COMPARATIVAS_ERP_IA.pdf)
-- 📄 **Documento Maestro del Proyecto (Word):** [`docs/entrega/Proyecto_ERP_Auditoria_IA.docx`](docs/entrega/Proyecto_ERP_Auditoria_IA.docx) (Capítulos 1-5, tablas financieras completas).
-- 📕 **Documento Maestro del Proyecto (PDF):** [`docs/entrega/Proyecto_ERP_Auditoria_IA.pdf`](docs/entrega/Proyecto_ERP_Auditoria_IA.pdf)
-- 🖼️ **Diagrama de Gantt (Sprints 02-25 Nov):** [`docs/diagrams/01_cronograma_gantt_sprints.png`](docs/diagrams/01_cronograma_gantt_sprints.png).
-- 🐟 **Diagrama de Ishikawa (Causa-Efecto):** [`docs/diagrams/02_ishikawa_causa_efecto.png`](docs/diagrams/02_ishikawa_causa_efecto.png).
-- 🏛️ **Arquitectura de Componentes Desacoplados:** [`docs/diagrams/03_arquitectura_componentes.png`](docs/diagrams/03_arquitectura_componentes.png).
-- 📈 **Modelo Estadístico de Anomalías por Z-Score:** [`docs/diagrams/04_distribucion_anomalias_zscore.png`](docs/diagrams/04_distribucion_anomalias_zscore.png).
+La carpeta `docs/` contiene el marco conceptual y metodológico completo:
+- [`01_formulacion_y_caso_de_estudio.md`](docs/01_formulacion_y_caso_de_estudio.md): Planteamiento, 3 problemas medibles (tiempo, cantidad, costo) y diagrama de Ishikawa.
+- [`02_ingenieria_de_software_y_casos_de_uso.md`](docs/02_ingenieria_de_software_y_casos_de_uso.md): Requerimientos RF/RNF, catálogo CU-01 a CU-07, diagrama C4 de Podman y modelo entidad-relación.
+- [`03_algoritmo_matematico_y_pipeline_ia.md`](docs/03_algoritmo_matematico_y_pipeline_ia.md): Fórmulas de Haversine, función de decaimiento geodésico y pipeline de visión artificial.
+- [`04_estudio_financiero_y_evaluacion_pep.md`](docs/04_estudio_financiero_y_evaluacion_pep.md): Evaluación financiera PEP: VAN al 12% = **+Bs. 45.235,25**, TIR = **84,3%**, B/C = **2,37**, Payback = **13 meses**.
+- [`05_metodologia_y_plan_iteraciones.md`](docs/05_metodologia_y_plan_iteraciones.md): Metodología Scrum Híbrido + XP, protocolo TDD y desglose diario de tareas.
 
 ---
 
-## 📊 Cronograma de Desarrollo (4 Sprints hasta el 25 de Noviembre)
+## ⚖️ Comparativa y Selección entre Ambas Propuestas
 
-| Sprint | Fechas | Foco Principal | Responsable |
-| :---: | :---: | :--- | :---: |
-| **Sprint 1** | 02 - 06 Nov | Cimientos arquitectónicos, PostgreSQL `pgvector`, RBAC y formulación académica. | Dev A & Dev B |
-| **Sprint 2** | 07 - 13 Nov | Motor matemático de vectores, integración con Ollama + Groq y Centro de Auditoría. | Dev A & Dev B |
-| **Sprint 3** | 14 - 19 Nov | WebSockets con Reverb, Ingesta Multimodal (Voz/Foto) y Copiloto Text-to-SQL. | Dev A & Dev B |
-| **Sprint 4** | 20 - 25 Nov | Pruebas de Calidad (PestPHP), estudio financiero PEP (VAN/TIR) y defensa final. | Dev A & Dev B |
+Ambos proyectos están configurados para correr **en simultáneo** sin conflictos:
 
----
+| Criterio | Propuesta 1 (Andina ERP) | Propuesta 2 (PETIDENTITY) |
+| :--- | :--- | :--- |
+| **Directorio de Trabajo** | `PROYECTOS FINALES\8vo` | `PROYECTOS FINALES\petidentity` |
+| **Rama Git** | `main` | `feat/propuesta-petidentity` |
+| **Puerto Web** | `http://localhost:8000/admin` | `http://localhost:8081` |
+| **Puerto Base de Datos** | `5432` (`auditoria_ia`) | `5433` o `5432` (`petidentity_db`) |
+| **Tecnología Diferencial** | pgvector 768d + Ollama + Reverb | Haversine + Scoring Multicriterio + Leaflet OSM |
+| **Impacto Principal** | Detección de fraude y sobreprecio | Reencuentro comunitario y bienestar animal |
 
-## 📚 Documentación Técnica Detallada
+### Guía para Congelar o Adoptar una Propuesta:
 
-- [01. Formulación del Problema y Caso de Estudio](docs/01_formulacion_y_caso_de_estudio.md)
-- [02. Ingeniería de Software y Casos de Uso](docs/02_ingenieria_de_software_y_casos_de_uso.md)
-- [03. Algoritmo Matemático y Pipeline IA](docs/03_algoritmo_matematico_y_pipeline_ia.md)
-- [04. Estudio Financiero y Evaluación PEP](docs/04_estudio_financiero_y_evaluacion_pep.md)
-- [Reglas del Agente Autónomo (AGENTS.md)](AGENTS.md)
-- [Convenciones de Código y Arquitectura (SKILLS.md)](SKILLS.md)
+- **Si se aprueba la Propuesta 1 (Andina ERP):**
+  Continuar trabajando en el directorio original `8vo` en la rama `main`. La rama `feat/propuesta-petidentity` y el directorio `petidentity` quedan congelados como respaldo.
+- **Si se aprueba la Propuesta 2 (PETIDENTITY):**
+  Fusionar `feat/propuesta-petidentity` hacia `main` (`git checkout main && git merge feat/propuesta-petidentity`) o continuar el desarrollo en el directorio `petidentity`.
