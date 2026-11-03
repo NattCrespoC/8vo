@@ -28,11 +28,22 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Columna vectorial de 768 dimensiones para nomic-embed-text
-        DB::statement('ALTER TABLE purchase_orders ADD COLUMN embedding vector(768);');
+        // Columna vectorial de 768 dimensiones para nomic-embed-text (o text si no hay pgvector)
+        $hasVector = false;
+        try {
+            $hasVector = (bool) DB::selectOne("SELECT 1 FROM pg_extension WHERE extname = 'vector'");
+        } catch (\Throwable $e) {
+            $hasVector = false;
+        }
 
-        // Índice HNSW con métrica de Distancia de Coseno
-        DB::statement('CREATE INDEX idx_po_embedding_hnsw ON purchase_orders USING hnsw (embedding vector_cosine_ops);');
+        if ($hasVector) {
+            DB::statement('ALTER TABLE purchase_orders ADD COLUMN embedding vector(768);');
+            DB::statement('CREATE INDEX idx_po_embedding_hnsw ON purchase_orders USING hnsw (embedding vector_cosine_ops);');
+        } else {
+            Schema::table('purchase_orders', function (Blueprint $table) {
+                $table->text('embedding')->nullable();
+            });
+        }
     }
 
     public function down(): void

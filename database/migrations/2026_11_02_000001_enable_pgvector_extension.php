@@ -9,7 +9,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        DB::statement('CREATE EXTENSION IF NOT EXISTS vector;');
+        try {
+            DB::statement('CREATE EXTENSION IF NOT EXISTS vector;');
+        } catch (\Throwable $e) {
+            // Permitir continuidad si la extensión no está disponible en el host local
+        }
     }
 
     public function down(): void

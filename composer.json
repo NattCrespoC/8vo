@@ -50,7 +50,7 @@
         }
     },
     "config": {
-        "optimize-autoloader": true,
+        "optimize-autoloader": false,
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
@@ -60,7 +60,7 @@
             "block": false
         },
         "platform": {
-            "php": "8.3.0"
+            "php": "8.4.4"
         }
     },
     "minimum-stability": "stable",

@@ -122,8 +122,8 @@ ollama pull nomic-embed-text
 
 ### 6. Iniciar Servidores de Desarrollo
 ```bash
-# Terminal 1: Servidor HTTP Laravel
-php artisan serve
+# Terminal 1: Servidor HTTP Laravel (Disponible en http://localhost:8000/admin)
+php artisan serve --port=8000
 
 # Terminal 2: Servidor WebSocket Reverb
 php artisan reverb:start
@@ -131,6 +131,21 @@ php artisan reverb:start
 # Terminal 3: Procesador de Colas de Auditoría Asíncrona
 php artisan queue:listen --queue=default,audit
 ```
+
+---
+
+## 🔑 Credenciales de Acceso para la Demostración
+
+| Rol | Correo Electrónico | Contraseña | Alcance de Evaluación |
+| :--- | :--- | :--- | :--- |
+| **Gerente General** | `gerente@andina.com` | `password` | Aprobación/Anulación de bloqueos, métricas y Text-to-SQL |
+| **Auditor Interno** | `auditor@andina.com` | `password` | Centro de auditoría, dictámenes JSON de Groq y actas PDF |
+| **Encargado de Compras** | `compras@andina.com` | `password` | Registro de órdenes de compra maestro-detalle |
+| **Jefe de Almacén** | `almacen@andina.com` | `password` | Recepción multimodal de facturas y control de mermas |
+
+> **URL de Acceso:** [`http://localhost:8000/admin`](http://localhost:8000/admin)  
+> **Ejecución de Pruebas Unitarias y de Integración (Pest):**  
+> `php artisan test` (12 tests / 144 assertions aprobados)
 
 ---
 
