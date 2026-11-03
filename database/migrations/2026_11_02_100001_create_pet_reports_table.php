@@ -43,3 +43,4 @@ return new class extends Migration
         Schema::dropIfExists('pet_reports');
     }
 };
+

@@ -108,3 +108,4 @@ it('evaluates match yielding high confidence for identical breed and nearby loca
         ->and($result['phenotype_score'])->toBe(70.0)
         ->and($result['total_score'])->toBeGreaterThan(95.0);
 });
+

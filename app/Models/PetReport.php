@@ -113,3 +113,4 @@ class PetReport extends Model
             : 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600&auto=format&fit=crop';
     }
 }
+

@@ -8,3 +8,4 @@ abstract class Controller
 {
     // Base controller for Laravel 11
 }
+

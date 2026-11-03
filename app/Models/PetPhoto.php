@@ -39,3 +39,4 @@ class PetPhoto extends Model
         return asset('storage/' . $this->photo_path);
     }
 }
+
